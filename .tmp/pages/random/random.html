@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>
+		 Meu Feed
+		 <ion-searchbar 
+		 [(ngModel)]="searchTerm"
+		 (ionInput)="filterItems()" 
+		 placeholder="Pesquise aqui..." 
+		 color="primary">
+		</ion-searchbar>
+    </ion-title>
+	 <ion-buttons end>
+
+		 <button ion-button icon-only (click)="resetaLista()" style="top:6px;">
+			 <ion-icon name="sync"></ion-icon>
+		 </button>
+
+	 </ion-buttons> 
+ 
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content 
+		snapbackDuration="100"
+		pullMin="100"
+		pullMax="200"
+		pullingIcon="arrow-dropdown"
+		pullingText="Puxe para atualizar"
+		refreshingSpinner="circles" 
+		refreshingText="Atualizando...">			
+		</ion-refresher-content>		
+	</ion-refresher>
+
+<!--
+	<ion-list [virtualScroll]="noticias">		
+			<button ion-item *virtualItem="let noticia" (click)="itemSelecionado(noticia.data.url)"> 
+				<ion-thumbnail item-right>
+					<img [src] = "noticia.data.thumbnail">
+				</ion-thumbnail>
+				<h2>{{noticia.data.title}}</h2>			
+				<p style="color:blue">{{noticia.data.author}}</p>
+				<p style="color:black">Ups: {{noticia.data.ups}}</p>	
+			</button>		
+	</ion-list>
+-->
+
+		<ion-list>
+			<button ion-item *ngFor="let noticia of noticias" (click)="itemSelecionado(noticia.data.url)"> 
+				<ion-thumbnail item-right>
+					<img [src] = "noticia.data.thumbnail">
+				</ion-thumbnail>
+				<h2 style="text-align:justify">{{noticia.data.title}}</h2>			
+				<p style="color:blue">{{noticia.data.author}}</p>
+				<p style="color:black">Ups: {{noticia.data.ups}}</p>	
+			</button>
+		</ion-list>
+	
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content
+       loadingText="Carregando Noticias...">
+    </ion-infinite-scroll-content>
+   </ion-infinite-scroll> 
+</ion-content>
