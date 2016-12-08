@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, LoadingController, ActionSheetController, Content,AlertController } from 'ionic-angular';
-import { InAppBrowser } from 'ionic-native';
+import { InAppBrowser, StatusBar } from 'ionic-native';
 import { Http } from '@angular/http';
 import { RedditService } from '../../providers/reddit-service';
 
@@ -16,7 +16,9 @@ export class HomePage {
 	
 	@ViewChild(Content) content: Content;
 	
-   public noFilter: Array<any>;
+	public loader: any;
+	 
+  public noFilter: Array<any>;
 	public hasFilter: boolean = false;
 	
 	public searchTerm: string = '';
@@ -29,6 +31,9 @@ export class HomePage {
 	private url: string = "https://www.reddit.com/new.json";
 
   constructor(public navCtrl: NavController, public http: Http, public loadingCtrl: LoadingController,public actionSheetCtrl: ActionSheetController,public redditService: RedditService, public alertCtrl: AlertController) {
+		
+	  StatusBar.hide();
+    
    
 	  this.fetchContent();	 
 	  
@@ -73,7 +78,6 @@ export class HomePage {
 	 }
 
 	itemSelecionado(url) : void {		
-		//alert(noticia.data.url);
 		let confirm = this.alertCtrl.create({
 			title: 'Continuar',
 			message: 'O post será aberto em outra página, tem certeza?',
@@ -86,19 +90,23 @@ export class HomePage {
           	text: 'Ok',
           		handler: () => {
 						let loading = this.loadingCtrl.create({
-      				content: 'Carregando Página...'
+      					content: 'Carregando Página...'
     					});
+		
+								loading.present();					
 						
-						loading.present();
-            		new InAppBrowser(url, '_system','location=yes');
-						loading.dismiss();
+            		new InAppBrowser(url, '_blank');
+//								browser.insertCSS({file: "random.scss"});
+								
+								loading.dismiss();						
           		}	
         		}
 			]
 		});
 		
 		confirm.present();
-	}
+	}	 
+
 
 	doInfinite(infiniteScroll) {
 

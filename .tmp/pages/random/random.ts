@@ -1,5 +1,5 @@
 import { Component, ViewChild  } from '@angular/core';
-import { NavController, LoadingController, ActionSheetController, Content, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ActionSheetController, Content, AlertController, ViewController  } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 import { Http } from '@angular/http';
 import { RedditService } from '../../providers/reddit-service';
@@ -12,8 +12,11 @@ import 'rxjs/add/operator/map';
 export class RandomPage {
 	
 	@ViewChild(Content) content: Content;
+	
+	
+	loader: any;
 
-   public noFilter: Array<any>;
+  public noFilter: Array<any>;
 	public hasFilter: boolean = false;
 	
 	public searchTerm: string = '';
@@ -25,10 +28,9 @@ export class RandomPage {
 	
 	private url: string = "https://www.reddit.com/hot.json";
 
-  constructor(public navCtrl: NavController, public http: Http, public loadingCtrl: LoadingController,public actionSheetCtrl: ActionSheetController,public redditService: RedditService, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public http: Http, public loadingCtrl: LoadingController,public actionSheetCtrl: ActionSheetController,public redditService: RedditService, public alertCtrl: AlertController, public viewCtrl: ViewController) {
    
 	  this.fetchContent();	  
-	  
   }
 
 	filterItems() {
@@ -85,10 +87,10 @@ export class RandomPage {
       					content: 'Carregando Página...'
     					});
 		
-						loading.present();						
+								loading.present();					
 						
-            		new InAppBrowser(url, '_system','location=no,toolbar=yes, hardwareback=true,clearcache=yes');												
-						loading.dismiss();
+								new InAppBrowser(url, '_blank','zoon=false, toolbarposition=top,');								
+								loading.dismiss();						
           		}	
         		}
 			]
@@ -96,6 +98,7 @@ export class RandomPage {
 		
 		confirm.present();
 	}
+	
 
 	doInfinite(infiniteScroll) {
 
@@ -184,5 +187,6 @@ export class RandomPage {
   actionSheet.present();
  
 }
+
 
 }

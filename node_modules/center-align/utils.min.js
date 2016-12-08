@@ -1,0 +1,1 @@
+"use strict";var utils=require("lazy-cache")(require),fn=require;require=utils,require("align-text","align"),require=fn,module.exports=utils;

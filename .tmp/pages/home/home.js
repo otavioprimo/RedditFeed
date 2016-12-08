@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, LoadingController, ActionSheetController, Content, AlertController } from 'ionic-angular';
-import { InAppBrowser } from 'ionic-native';
+import { InAppBrowser, StatusBar } from 'ionic-native';
 import { Http } from '@angular/http';
 import { RedditService } from '../../providers/reddit-service';
 import 'rxjs/add/operator/map';
@@ -17,6 +17,7 @@ export var HomePage = (function () {
         this.olderPosts = "https://www.reddit.com/new.json?after=";
         this.newerPosts = "https://www.reddit.com/new.json?before=";
         this.url = "https://www.reddit.com/new.json";
+        StatusBar.hide();
         this.fetchContent();
     }
     HomePage.prototype.filterItems = function () {
@@ -55,7 +56,6 @@ export var HomePage = (function () {
     };
     HomePage.prototype.itemSelecionado = function (url) {
         var _this = this;
-        //alert(noticia.data.url);
         var confirm = this.alertCtrl.create({
             title: 'Continuar',
             message: 'O post será aberto em outra página, tem certeza?',
@@ -71,7 +71,8 @@ export var HomePage = (function () {
                             content: 'Carregando Página...'
                         });
                         loading.present();
-                        new InAppBrowser(url, '_system', 'location=yes');
+                        new InAppBrowser(url, '_blank');
+                        //								browser.insertCSS({file: "random.scss"});
                         loading.dismiss();
                     }
                 }

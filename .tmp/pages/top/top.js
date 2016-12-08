@@ -69,7 +69,7 @@ export var TopPage = (function () {
                             content: 'Carregando Página...'
                         });
                         loading.present();
-                        new InAppBrowser(url, '_system', 'location=yes');
+                        new InAppBrowser(url, '_blank');
                         loading.dismiss();
                     }
                 }

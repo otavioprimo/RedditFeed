@@ -86,7 +86,7 @@ export class TopPage {
     					});
 						
 						loading.present();
-            		new InAppBrowser(url, '_system','location=yes');
+            		new InAppBrowser(url, '_blank');
 						loading.dismiss();
           		}	
         		}

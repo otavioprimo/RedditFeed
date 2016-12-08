@@ -18,8 +18,13 @@ export var RedditService = (function () {
                 .subscribe(function (data) {
                 _this.feeds = data.data.children;
                 _this.feeds.forEach(function (e, i, a) {
-                    if (!e.data.thumbnail || e.data.thumbnail.indexOf('b.thumbs.redditmedia.com') === -1) {
-                        e.data.thumbnail = 'http://www.redditstatic.com/icon.png';
+                    if (e.data.over_18 == false) {
+                        if (!e.data.thumbnail || e.data.thumbnail.indexOf('b.thumbs.redditmedia.com') === -1) {
+                            e.data.thumbnail = 'http://www.redditstatic.com/icon.png';
+                        }
+                    }
+                    else {
+                        e.data.thumbnail = 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Russia_18%2B.svg/500px-Russia_18%2B.svg.png';
                     }
                 });
                 resolve(_this.feeds);

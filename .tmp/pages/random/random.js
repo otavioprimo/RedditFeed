@@ -1,17 +1,18 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, LoadingController, ActionSheetController, Content, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, ActionSheetController, Content, AlertController, ViewController } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 import { Http } from '@angular/http';
 import { RedditService } from '../../providers/reddit-service';
 import 'rxjs/add/operator/map';
 export var RandomPage = (function () {
-    function RandomPage(navCtrl, http, loadingCtrl, actionSheetCtrl, redditService, alertCtrl) {
+    function RandomPage(navCtrl, http, loadingCtrl, actionSheetCtrl, redditService, alertCtrl, viewCtrl) {
         this.navCtrl = navCtrl;
         this.http = http;
         this.loadingCtrl = loadingCtrl;
         this.actionSheetCtrl = actionSheetCtrl;
         this.redditService = redditService;
         this.alertCtrl = alertCtrl;
+        this.viewCtrl = viewCtrl;
         this.hasFilter = false;
         this.searchTerm = '';
         this.olderPosts = "https://www.reddit.com/hot.json?after=";
@@ -69,7 +70,7 @@ export var RandomPage = (function () {
                             content: 'Carregando Página...'
                         });
                         loading.present();
-                        new InAppBrowser(url, '_system', 'location=no,toolbar=yes, hardwareback=true,clearcache=yes');
+                        new InAppBrowser(url, '_blank', 'zoon=false, toolbarposition=top,');
                         loading.dismiss();
                     }
                 }
@@ -170,6 +171,7 @@ export var RandomPage = (function () {
         { type: ActionSheetController, },
         { type: RedditService, },
         { type: AlertController, },
+        { type: ViewController, },
     ];
     RandomPage.propDecorators = {
         'content': [{ type: ViewChild, args: [Content,] },],
